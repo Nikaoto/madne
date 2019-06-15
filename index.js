@@ -10,7 +10,7 @@ const envFile = process.env.NODE_ENV === "dev" ? ".devenv" : ".prodenv"
 const envPath = path.resolve(__dirname, envFile)
 
 // Crash if environemt file doesn't exist
-if (!fs.existsSync(envPath)) {
+if (!fs.existsSync(envPath) && process.env.NODE_ENV !== "production") {
   console.log(`ERROR: ${envPath} not found, crashing violently!`)
   process.exit()
 }
