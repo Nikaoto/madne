@@ -51,7 +51,7 @@
 
    const uploadMelt = document.getElementById("upload-melt")
    uploadMelt.addEventListener("click", () => {
-
+	 uploadMelt.disabled = true
 	 const formData = new FormData()
 	 formData.append("authorId", "5d03fab1de7cce55fba1305c")
 	 formData.append("imageData", canvas.toDataURL("image/png"))

@@ -26,6 +26,11 @@ button:hover {
 	transform: scale(1.1);
 }
 
+button:disabled,
+button[disabled] {
+	background-color: grey;
+}
+
 a:hover {
 	cursor: pointer;
 }
