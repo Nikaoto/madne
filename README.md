@@ -14,7 +14,7 @@ _The above two files should contain a valid mongodb url and database name. They 
 ## Install
 ```
 git clone https://github.com/Nikaoto/madne
-cs madne
+cd madne
 npm install
 ```
 
