@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>madne</title>
+	<style>
+	 #image {
+		 object-fit: cover;
+	 }
+	</style>
+  </head>
+  <body>
+	<h1>{{title}}</h1>
+	<div id="melt-list">
+	</div>
+	<img id="image" width="400px" height="200px" src="https://placecage.com/400/200" />
+	<br />
+	<button id="browse-image">Browse image...</button>
+	<br />
+	<button id="upload-melt">Upload melt</button>
+	<input type='file' id="image-input" accept="image/*" style="display: none" />
+  </body>
+  <script defer>
+   let imageData = null
+   const image = document.getElementById("image")
+   const imageInput = document.getElementById("image-input")
+   const browseImage = document.getElementById("browse-image")
+   browseImage.addEventListener("click", () => imageInput.click())
+   imageInput.addEventListener("change", () => {
+	 if (imageInput.files && imageInput.files[0]) {
+	   const reader = new FileReader()
+
+	   reader.onload = (e) => {
+		 const src = e.target.result
+		 image.src = src
+		 imageData = src
+	   }
+	   reader.readAsDataURL(imageInput.files[0])
+	 }
+   })
+
+   const uploadMelt = document.getElementById("upload-melt")
+   uploadMelt.addEventListener("click", () => {
+
+	 const formData = new FormData()
+	 formData.append("authorId", "5d03fab1de7cce55fba1305c")
+	 formData.append("imageData", imageData)
+	 
+	 fetch("/api/melt", {
+	   method: "POST",
+	   body: formData
+	 })
+	   .then(res => res.json())
+	   .then(json => console.log(json))
+	   .catch(err => console.log(err))
+   })
+
+   const meltList = document.getElementById("melt-list")
+   fetch("/api/melts")
+	 .then(res => res.json())
+	 .then(melts => melts.forEach(m => {
+	   const meltDiv = document.createElement("article")
+	   const meltImg = document.createElement("img")
+	   console.log(m)
+	   meltImg.src = "data:image/jpeg;base64," + m.imageData
+	   meltDiv.appendChild(meltImg)
+	   meltList.appendChild(meltDiv)
+	 }))
+	 .catch(err => console.log(err))
+  </script>
+</html>

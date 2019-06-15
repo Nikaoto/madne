@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{{head}}}
+  <body>
+	<h1>{{title}}</h1>
+	<div class="melt-list">
+	</div>
+	<br />
+	<button class="melt-stuff" onclick="location.assign('/upload')">Let's melt stuff!</button>
+	<button class="whats-up" onclick="location.assign('/about')">What's up with this website?</button>
+	{{{footer}}}
+  </body>
+  <script defer>
+   const meltList = document.querySelector(".melt-list")
+   fetch("/api/melts")
+  	 .then(res => res.json())
+  	 .then(melts => melts.forEach(m => {
+  	   const meltDiv = document.createElement("article")
+	   meltDiv.classList.add("melt")
+  	   const meltImg = document.createElement("img")
+	   meltImg.setAttribute("data-action", "zoom")
+	   meltImg.classList.add("melt-img")
+  	   meltImg.src = "data:image/png;base64," + m.imageData
+	   window.zoom.setup(meltImg)
+  	   meltDiv.appendChild(meltImg)
+  	   meltList.appendChild(meltDiv)
+  	 }))
+  	 .catch(err => console.log(err))
+  </script>
+</html>

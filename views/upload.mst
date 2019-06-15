@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{{head}}}
+  <body>
+	<h1>Load a melt</h1>
+	<div class="editor-container">
+	  <canvas id="canvas" width="680px" height="400px">
+	  </canvas>
+	</div>
+	<div id="editor-controls-container">
+	  <button id="increase-melt-size">+</button>
+	  <button id="decrease-melt-size">-</button>
+	</div>
+	
+	<button id="browse-image">Browse image...</button>
+	<br />
+	<br />
+	<h2>Share your melt when you finish!</h2>
+	<button id="upload-melt">Frick yes, upload it now!</button>
+	<input type='file' id="image-input" accept="image/*" style="display: none" />
+	<div style="height: 50px">
+	</div>
+	{{{footer}}}
+  </body>
+  <script defer>
+   const canvas = document.getElementById("canvas")
+   const ctx = canvas.getContext("2d")
+
+   const image = document.getElementById("image")
+   const imageInput = document.getElementById("image-input")
+   const browseImage = document.getElementById("browse-image")
+   browseImage.addEventListener("click", () => imageInput.click())
+   imageInput.addEventListener("change", () => {
+	 if (imageInput.files && imageInput.files[0]) {
+	   const reader = new FileReader()
+
+	   reader.onload = function(e) {
+		 const dataUri = e.target.result
+		 
+		 const img = new Image()
+		 img.onload = function() {
+		   ctx.fillStyle = "#d3d3d3"
+		   ctx.fillRect(0, 0, canvas.width, canvas.height);
+		   ctx.drawImage(img, canvas.width/2 - this.width/2, canvas.height/2 - this.height/2, this.width, this.height)
+		 }
+		 img.src = dataUri
+	   }
+	   reader.readAsDataURL(imageInput.files[0])
+	 }
+   })
+
+   const uploadMelt = document.getElementById("upload-melt")
+   uploadMelt.addEventListener("click", () => {
+
+	 const formData = new FormData()
+	 formData.append("authorId", "5d03fab1de7cce55fba1305c")
+	 formData.append("imageData", canvas.toDataURL("image/png"))
+
+	 fetch("/api/melt", {
+	   method: "POST",
+	   body: formData
+	 })
+	   .then(res => res.json())
+	   .then(json => console.log(json))
+	   .then(() => location.assign("/"))
+	   .catch(err => console.log(err))
+   })
+   
+   function getCursorPosition(canvas, event) {
+     const rect = canvas.getBoundingClientRect()
+     const x = event.clientX - rect.left
+     const y = event.clientY - rect.top
+     console.log("x: " + x + " y: " + y)
+	 return {x: x, y: y}
+   }
+
+   let md = false
+   let meltSize = 28
+   const meltDistance = 12
+   const meltDown = function(e) {
+	 const pos = getCursorPosition(canvas, e)
+	 pos.x -= meltSize/2
+	 pos.y -= meltSize/2
+	 let imgData = ctx.getImageData(pos.x, pos.y, meltSize, meltSize)
+	 const meltPos = {x: pos.x, y: pos.y + meltDistance}
+
+	 ctx.putImageData(imgData, meltPos.x, meltPos.y)
+   }
+   
+   canvas.addEventListener('mousedown', function(e) {
+	 meltDown(e)
+	 md = true
+   })
+   canvas.addEventListener('mouseup', function(e) {
+	 md = false
+   })
+   canvas.addEventListener("mousemove", function(e) {
+	 if (md)
+	   meltDown(e)
+   })
+
+   const plus = document.getElementById("increase-melt-size")
+   plus.addEventListener("click", (e) => meltSize += 2)
+   const minus = document.getElementById("decrease-melt-size")
+   minus.addEventListener("click", (e) => meltSize -= 2)
+  </script>
+</html>

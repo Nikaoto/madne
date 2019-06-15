@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{{head}}}
+  <body>
+	<h1>madne</h1>
+	<br />
+	<marquee style="color: #FE7668">
+	  <b style="color:red">WARNING</b> this is no place for lobsters. If you posess one or more crustaceous organs, I advise you to wear protective gear
+	</marquee>
+	<br />
+	<br />
+	<br />
+	<p style="font-size: 20px;">
+	  <b>madne</b> lets you easily melt images, upload them and share them with the world.
+	  <br />
+	  <br />
+	  Made by Nikoloz Otiashvili for as a final project for Web Development.
+	  <br />
+	  Inspired by <a href="http://thenutgallery.blogspot.com/2010/07/melting-birds.html">Melting Birds</a> by Maurizio Bongiovanni.
+	</p>
+	<br />
+	<button class="whats-up" onclick="location.assign('/')">Go home</button>
+	<button class="melt-stuff" onclick="location.assign('/upload')">Go big!</button>
+  </body>
+</html>

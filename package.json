@@ -1,0 +1,24 @@
+{
+  "name": "madne",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "startd": "nodemon index.js"
+  },
+  "author": "Nikoloz Otiashvili",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.2.7",
+    "multer": "^1.4.1",
+    "mustache": "^3.0.1",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
