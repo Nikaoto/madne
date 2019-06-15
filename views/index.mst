@@ -7,7 +7,7 @@
 	</div>
 	<br />
 	<button class="melt-stuff" onclick="location.assign('/upload')">Let's melt stuff!</button>
-	<button class="whats-up" onclick="location.assign('/about')">What's up with this website?</button>
+	<button class="whats-up" style="max-width: 300px; max-height" onclick="location.assign('/about')">What's up with this website?</button>
 	{{{footer}}}
   </body>
   <script defer>
