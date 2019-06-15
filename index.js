@@ -1,8 +1,25 @@
+// index.js
+
+const path = require("path")
+const fs = require("fs")
+
+// Set env file based on NODE_ENV
+const envFile = process.env.NODE_ENV === "dev" ? ".devenv" : ".prodenv"
+
+// Get env path
+const envPath = path.resolve(__dirname, envFile)
+
+// Crash if environemt file doesn't exist
+if (!fs.existsSync(envPath)) {
+  console.log(`ERROR: ${envPath} not found, crashing violently!`)
+  process.exit()
+}
+
+require("dotenv").config({ path: envPath })
+
 const express = require("express")
 const mongodb = require("mongodb")
 const bodyParser = require("body-parser")
-const path = require("path")
-const fs = require("fs")
 const multer = require("multer")
 const upload = multer({ dest: path.resolve(__dirname, "uploads/") })
 const mustache = require("mustache")
@@ -23,8 +40,8 @@ const getView = (fileName) => new Promise((resolve, reject) => {
 const getViewSync = (fileName) => fs.readFileSync(path.resolve(VIEW_DIR, fileName)).toString()
 
 // Configure mongodb
-const MONGO_URL = "mongodb://localhost:27017"
-const DB_NAME = "madne"
+const MONGO_URL = process.env.MONGO_URL
+const DB_NAME = process.env.DB_NAME
 const mongoClient = new mongodb.MongoClient(MONGO_URL, { useNewUrlParser: true });
 mongoClient.connect()
   .then(() => main(mongoClient.db(DB_NAME)))

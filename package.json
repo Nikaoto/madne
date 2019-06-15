@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "startd": "nodemon index.js"
+    "start": "NODE_ENV=\"production\" node index.js",
+    "dev": "NODE_ENV=\"dev\" node index.js",
+    "devd": "NODE_ENV=\"dev\" nodemon index.js"
   },
   "author": "Nikoloz Otiashvili",
   "license": "UNLICENSED",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.2.7",
     "multer": "^1.4.1",
