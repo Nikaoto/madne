@@ -22,6 +22,9 @@
 	  You can check out my other stuff at <a href="https://nika.ninja">nika.ninja</a>
 	</h3>
 	<br />
+	<br />
+	<br />
+	<br />
 	<button class="whats-up" onclick="location.assign('/')">Go home</button>
 	<button class="melt-stuff" onclick="location.assign('/upload')">Go big!</button>
   </body>
