@@ -1,7 +1,7 @@
 # madne
 Final project for web development classes at university.
 
-Demo available here: http://madne.herokuapp.com/
+Demo might still be available here: http://madne.herokuapp.com/
 
 ## Requirements
 - mongodb-org
